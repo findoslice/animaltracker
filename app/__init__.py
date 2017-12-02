@@ -81,3 +81,27 @@ def print_submit():
         return render_template('submit.html', result = False)
     if request.method == 'POST':
         latitutde, longitude = get_coords(request.form['location'])
+        with open('database.json', 'r') as f:
+            data = json.load(f)
+        count = 0
+        for key in data:
+            if SequenceMatcher(None, key.lower(), request.form['critter'].lower()).ratio() > 0.8:
+                array = data[key]
+                name = key
+                count = 1
+                break
+        if count == 0:
+            array = []
+            name = request.form['critter']
+        array.append({'lat':latitude,
+                      'lng':longitude,
+                      'date':request.form['date'],
+                      'description':str('<b>' + str(request.form['critter']) +'</b><br>Spotted on ' + str(request.form['date']))
+                        })
+        data[name] = array
+        json.dump('database.json', data)
+        try:
+            return render_template('submit.html', result = True)
+        except:
+            raise
+                
