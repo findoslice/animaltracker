@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel = "stylesheet" href = "../static/normalize.css">
+        <link rel = "stylesheet" href = "../static/skeleton.css">
+        <link rel = "stylesheet" href = "../static/main.css">
+        {{ mymap.js }}
+    </head>
+{% block content %}
+    <body>
+        <div class = "container">
+            <div class = "twelve columns" id = "header">
+                <h3> Critter Spotting successfully logged! <a href = '/submit' style="text-decoration:none;">Click here to log another!</a></h13>
+            </div>
+            <div class = "twelve columns" id = "map">
+                {{mymap.html}}
+            </div>
+        </div>
+    </body>
+{% endblock %}
+</html>

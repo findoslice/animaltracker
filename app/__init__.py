@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_googlemaps import GoogleMaps, Map
 from geopy.geocoders import Nominatim
 import json
+import wikipedia
 from pprint import pprint
 from difflib import SequenceMatcher
 
@@ -44,7 +45,7 @@ def parse_json(filter, jsonfile):
 def print_map():
     if request.method == 'POST':
         try:
-            markers= parse_json(request.form['critters'], "template.json")
+            markers= parse_json(request.form['critterinos'], "database.json")
         except:
             raise
         try:
@@ -54,18 +55,28 @@ def print_map():
             lat=55.9444941
             lng=-3.1863534
         mymap = Map(
-        style = "height:1000%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        style = "height:500%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
         identifier="view-side",
         lat = lat,
         lng = lng,
         markers= markers,
-        zoom=5
+        zoom=8,
+        cluster=False,
+        maptype="TERRAIN"
     )
-        return render_template('map.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
+        try:
+            page = wikipedia.page(request.form['critterinos'])
+            pagecontent = page.summary
+            print(imagelink, pagecontent)
+            return render_template('map.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"], pagecontent = pagecontent)
+        except:
+            return render_template('map.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
+
+        
     
     if request.method == 'GET':
         mymap = Map(
-        style = "height:1000%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        style = "height:200%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
         identifier="view-side",
         lat= 55.9444941,
         lng=-3.1863534,
@@ -80,7 +91,7 @@ def print_submit():
     if request.method == 'GET':
         return render_template('submit.html', result = False)
     if request.method == 'POST':
-        latitutde, longitude = get_coords(request.form['location'])
+        latitude, longitude = get_coords(request.form['location'])
         with open('database.json', 'r') as f:
             data = json.load(f)
         count = 0
@@ -96,12 +107,37 @@ def print_submit():
         array.append({'lat':latitude,
                       'lng':longitude,
                       'date':request.form['date'],
-                      'description':str('<b>' + str(request.form['critter']) +'</b><br>Spotted on ' + str(request.form['date']))
+                      'description':str('<b>' + str(request.form['critter']) +'</b><br>Spotted on ' + str(request.form['date']) + '<br>' + str(request.form['location']))
                         })
         data[name] = array
-        json.dump('database.json', data)
+        pprint(data)
+        with open("database.json", 'w') as outfile:
+            json.dump(data, outfile)
+
         try:
-            return render_template('submit.html', result = True)
+            markers= parse_json(request.form['critter'], "database.json")
+        except:
+            raise
+        try:
+            lat= markers[0]['lat'] or 55.9444941
+            lng=markers[0]['lng'] or -3.1863534
+        except:
+            lat=55.9444941
+            lng=-3.1863534
+        mymap = Map(
+        style = "height:800%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        identifier="view-side",
+        lat = lat,
+        lng = lng,
+        markers= markers,
+        zoom=8,
+        cluster=False,
+        maptype="TERRAIN"
+    )
+
+
+        try:
+            return render_template('submitted.html', mymap = mymap)
         except:
             raise
                 
