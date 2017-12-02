@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+            <link rel = "stylesheet" href = "../static/normalize.css">
+            <link rel = "stylesheet" href = "../static/skeleton.css">
+            <link rel = "stylesheet" href = "../static/main.css">
+    </head>
+    {% if result %}
+    <body style = "background-color:#e6ffe6;">
+        <div class = "container">
+        <h1 class = "eleven columns offset-by-one" style = "text-align: center;"> Spotting submitted! Why not tell us about another encounter?</h1>
+    {% else %}
+    <body>
+        <div class = "container"></div>
+        <h1 class = "eleven columns offset-by-one"> Seen a critter? Why not tell us about it!</h1>
+    {% endif %}
+        <div class = "six columns offset-by-three" style = "align-content:center;">
+            <form method="post" action ="/map">
+                <label style = "text-align:center;"><h4>What critter did you spy?</h4></label>
+                <input  type="text" placeholder="idk, a squirrel" name="critter" id = "text" align = "center" size="50" style = "text-align:center;position:absolute;"><br><br><br>
+                
+                <label style = "text-align:center;"><h4>Where did you spy that critter?</h4></label>
+                <input  type="text" placeholder="idk, pyongyang" name="location" id = "text" align = "center" size="50" style = "text-align:center;position:absolute;"><br><br><br>
+                
+                <label for="date" style="text-align:center;"><h4>Where did you spy that critter?</h4></label>
+                <input type="date" id="text" style="width:92%;text-align:center;" name = "date" align = "center">
+                
+                <div class = "one column offset-by-four">
+                    <input type="submit" class = "button-primary" style = "text-align:center;position:absolute;">
+                </div>
+            </form>
+        </div>
+    </div>
+    </body>
+</html>
