@@ -18,8 +18,15 @@ def get_coords(loc):
         x,y = location.latitude, location.longitude
         return x,y
     except:
-        location = geolocator.geocode("pyongyang")
-        return location.latitude, location.longitude
+        loc = loc.split(',')
+        print (loc)
+        loc = loc[1:]
+        ", ".join(loc)
+        print (loc)
+        location = geolocator.geocode(loc)
+        x,y = location.latitude, location.longitude
+        return x,y
+
 
 def parse_json(filter, jsonfile):
     out = []
@@ -28,11 +35,11 @@ def parse_json(filter, jsonfile):
         datastore = json.load(f)
 
     for key in datastore:
-        if SequenceMatcher(None, key.lower(), filter.lower()).ratio() > 0.8:
+        if (SequenceMatcher(None, key.lower(), filter.lower()).ratio() > 0.8) or filter == "":
             for elem in datastore[key]:
                 bork.append(elem)
     for elem in bork:
-        out = out + [{'icon': 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        out = out + [{
                      'lat': elem['lat'],
                      'lng': elem['lng'],
                      'infobox' : elem['description']
@@ -55,13 +62,13 @@ def print_map():
             lat=55.9444941
             lng=-3.1863534
         mymap = Map(
-        style = "height:500%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        style = "height:1500%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
         identifier="view-side",
         lat = lat,
         lng = lng,
         markers= markers,
         zoom=8,
-        cluster=False,
+        cluster=True, cluster_gridsize=10,
         maptype="TERRAIN"
     )
         try:
@@ -75,12 +82,16 @@ def print_map():
         
     
     if request.method == 'GET':
+        markers = parse_json("",'database.json')
         mymap = Map(
-        style = "height:200%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        style = "height:1500%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
         identifier="view-side",
-        lat= 55.9444941,
-        lng=-3.1863534,
-        zoom=10
+        lat = 55.9444,
+        lng = -3.1870,
+        zoom=8,
+        markers=markers,
+        cluster=True, cluster_gridsize=10,
+        maptype="TERRAIN"
     )
         return render_template('map.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
 
@@ -89,7 +100,7 @@ def print_map():
 @app.route('/submit', methods = ['GET', 'POST'])
 def print_submit():
     if request.method == 'GET':
-        return render_template('submit.html', result = False)
+        return render_template('submit.html', result = True)
     if request.method == 'POST':
         latitude, longitude = get_coords(request.form['location'])
         with open('database.json', 'r') as f:
@@ -125,13 +136,13 @@ def print_submit():
             lat=55.9444941
             lng=-3.1863534
         mymap = Map(
-        style = "height:800%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
+        style = "height:550%;width:140%;position: absolute; alignment:center; margin-top:6%; margin-left:-20%;",
         identifier="view-side",
         lat = lat,
         lng = lng,
         markers= markers,
         zoom=8,
-        cluster=False,
+        cluster=True, cluster_gridsize=10,
         maptype="TERRAIN"
     )
 

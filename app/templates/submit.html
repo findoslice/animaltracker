@@ -4,16 +4,12 @@
             <link rel = "stylesheet" href = "../static/normalize.css">
             <link rel = "stylesheet" href = "../static/skeleton.css">
             <link rel = "stylesheet" href = "../static/main.css">
+            <title> CSI miami</title>
     </head>
-    {% if result %}
-    <body style = "background-color:#e6ffe6;">
-        <div class = "container">
-        <h1 class = "eleven columns offset-by-one" style = "text-align: center;"> Spotting submitted! Why not tell us about another encounter?</h1>
-    {% else %}
     <body>
-        <div class = "container"></div>
-        <h1 class = "eleven columns offset-by-one"> Seen a critter? Why not tell us about it!</h1>
-    {% endif %}
+        <div class = "container">
+        <div class = "twelve columns">
+        <h1 class = "eleven columns offset-by-one" style = "text-align: center;"> Got any critter encounters?</h1>
         <div class = "six columns offset-by-three" style = "align-content:center;">
             <form method="post" action ="/submit">
                 <label style = "text-align:center;"><h4>What critter did you spy?</h4></label>
@@ -29,6 +25,8 @@
                     <input type="submit" class = "button-primary" style = "text-align:center;position:absolute;">
                 </div>
             </form>
+            <br><br><br><br><p style = "text-align:center;"> alternately click <a href = "/map" style="text-decoration:none;"> here </a> to see maps for different critters</p>
+        </div>
         </div>
     </div>
     </body>
