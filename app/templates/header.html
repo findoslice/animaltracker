@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        {% block header %}
+            <link rel = "stylesheet" href = "../static/normalize.css">
+            <link rel = "stylesheet" href = "../static/skeleton.css">
+            <link rel = "stylesheet" href = "../static/main.css">
+            {{mymap.js}}
+
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <div class="container">
+            <div class="row">
+                <h1 style = "text-align:center;">idk a squirrel</h1>
+            </div>  
+            <form method = 'post' action = '/'> 
+                
+                    <div class="four columns">
+                      <label for="disease">What critter you want?</label>
+                      <input class="u-full-width" type="search" placeholder="idk a squirrel" list="critters" id="critters" name = "critters">
+                      <datalist id="critters" name = "critters">
+                        {% for critter in critters%}
+                          <option value = "{{critter}}">
+                        {% endfor %}
+                      </datalist>     
+                    </div>
+                   
+                    <div class="four columns">
+                        <label for="from">Sightings after:</label>
+                        <input class="u-fill-width" type="date" id="after" style="width:100%" name = "after">
+                    </div>
+                    <div class ="four columns">
+                      <input class="button-primary" type="submit" value="Show me some critters!" style="width:100%;margin-top:9.5%">
+                    </div>
+        </form>
+        {% endblock %}
+        {% block content %}{%endblock%}
+    </body>
+    {% block footer%}{% endblock %}
+</html>

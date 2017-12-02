@@ -10,10 +10,24 @@ GoogleMaps(app)
 def print_map():
     if request.method == 'GET':
         mymap = Map(
-        style = "height:70%;width:90%;margin:5%;margin-top:10%;position: absolute; alignment:center;",
+        style = "height:1000%;width:150%;position: absolute; alignment:center; margin-top:6%;margin-left:-25%;",
         identifier="view-side",
-        lat=37.4419,
-        lng=-122.1419,
-        markers=[(37.4419, -122.1419)]
+        lat=55.9444941,
+        lng=-3.1863534,
+        markers=[
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+             'lat': 37.4419,
+             'lng': -122.1419,
+             'infobox': "<b>thicc boi</b>"
+          },
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+             'lat': 55.9444941,
+             'lng': -3.1863534,
+             'infobox': "<b>thicc boi</b>"
+          }
+        ]
     )
-        return render_template('map.html', mymap = mymap)
+        return render_template('map.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
+

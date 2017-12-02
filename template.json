@@ -1,0 +1,24 @@
+{
+    "some birdy" : [
+        {
+            "lat" : 123,
+            "long" : 456,
+            "date" : "datetime",
+            "image" : "tavo.jpg"
+        },
+        {
+            "lat" : 789,
+            "long" : 123,
+            "date" : "datetime",
+            "image" : "mama.jpg" 
+        }
+    ],
+    "idk a squirrel" : [
+        {
+            "lat" : 135,
+            "long" : 246,
+            "date" : "datetime",
+            "image" : "lietuva.png"
+        }
+    ]
+}
