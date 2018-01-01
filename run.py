@@ -1,3 +1,4 @@
 from app import app
-from os import environ
-app.run(debug=False, host='0.0.0.0', port=environ['PORT'])
+import os
+port = os.environ['PORT']
+app.run(debug=False, host='0.0.0.0', port=port)
