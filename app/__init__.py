@@ -151,4 +151,22 @@ def print_submit():
             return render_template('submitted.html', mymap = mymap)
         except:
             raise
+
+@app.route('/gay', methods = ["GET"])
+def gay():
+    if request.method == "GET":
+        markers = parse_json("",'database.json')
+        mymap = Map(
+        style = "height:40%;width:100%;position: absolute; alignment:left; margin-top:6%;margin-left:-25%;",
+        identifier="view-side",
+        lat = 55.9444,
+        lng = -3.1870,
+        zoom=8,
+        markers=markers,
+        cluster=False,
+        maptype="TERRAIN",
+        fullscreen_control=False,
+        streetview_control=False
+    )
+        return render_template('gay.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
                 
