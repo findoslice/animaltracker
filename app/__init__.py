@@ -174,5 +174,9 @@ def gay():
                 
 @app.route('/api/<str:critter>', methods = ["GET"])
 def api_request():
-    x = parse_json(critter, 'database.json')
-    return jsonify(x)
+    if request.method == "GET":
+        try:
+            x = parse_json(critter, 'database.json')
+            return jsonify(x)
+        except:
+            raise
