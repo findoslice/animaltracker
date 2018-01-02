@@ -102,6 +102,8 @@ def print_submit():
     if request.method == 'GET':
         return render_template('submit.html', result = True)
     if request.method == 'POST':
+        if not (request.form['location'] and request.form['critter'] and request.form['date']):
+            return render_template('submit.html', result = True)
         latitude, longitude = get_coords(request.form['location'])
         with open('database.json', 'r') as f:
             data = json.load(f)
