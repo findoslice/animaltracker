@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_googlemaps import GoogleMaps, Map
 from geopy.geocoders import Nominatim
 import json
@@ -172,3 +172,7 @@ def gay():
     )
         return render_template('gay.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
                 
+@app.route('/api/<str:critter>', methods = ["GET"])
+def api_request():
+    x = parse_json(critter, 'database.json')
+    return jsonify(x)
