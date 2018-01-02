@@ -173,7 +173,7 @@ def gay():
         return render_template('gay.html', mymap = mymap, critters = ["squirrels", "octopus", "frank"])
                 
 @app.route('/api/<critter>', methods = ["GET"])
-def api_request():
+def api_request(critter):
     if request.method == "GET":
         try:
             x = parse_json(critter, 'database.json')
